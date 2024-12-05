@@ -15,8 +15,8 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'logo.svg'],
       manifest: {
         name: 'Si Alarm',
-        short_name: 'App',
-        description: 'Your app description',
+        short_name: 'sialram',
+        description: 'An alarm app for general exercise',
         theme_color: '#ffffff',
         icons: [
           {
