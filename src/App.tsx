@@ -6,7 +6,11 @@ function App() {
   const [time, setTime] = useState(0); // 计时器当前时间(秒)
   const [targetTime, setTargetTime] = useState(5); // 目标时间(秒) 
   const [isRunning, setIsRunning] = useState(false); // 计时器运行状态
-  const [logs, setLogs] = useState<string[]>([]); // 计时器日志
+  const [logs, setLogs] = useState<string[]>(() => {
+    // 初始化时从localStorage读取日志
+    const savedLogs = localStorage.getItem('timerLogs');
+    return savedLogs ? JSON.parse(savedLogs) : [];
+  }); // 计时器日志
   const [isLoop, setIsLoop] = useState(false); // 是否循环
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('zh-CN'));
@@ -25,7 +29,12 @@ function App() {
     if (isRunning) {
       // 记录启动日志
       const startLog = `计时器启动 - ${new Date().toLocaleString()}`;
-      setLogs(prev => [...prev, startLog]);
+      setLogs(prev => {
+        const newLogs = [...prev, startLog];
+        // 保存日志到localStorage
+        localStorage.setItem('timerLogs', JSON.stringify(newLogs));
+        return newLogs;
+      });
       
       timer = window.setInterval(() => {
         setTime(prevTime => {
@@ -33,6 +42,10 @@ function App() {
             // 播放提示音
             audioRef.current?.play();
             setTimeout(() => {
+              if(! audioRef.current) {
+                return;
+              }
+              audioRef.current!.currentTime = 0;
               audioRef.current?.pause();
             }, 1000);
             

@@ -14,7 +14,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'logo.svg'],
       manifest: {
-        name: 'Your App Name',
+        name: 'Si Alarm',
         short_name: 'App',
         description: 'Your app description',
         theme_color: '#ffffff',
