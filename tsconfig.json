@@ -1,0 +1,11 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "noUnusedLocals": false,
+    "allowUnusedLabels": true
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
