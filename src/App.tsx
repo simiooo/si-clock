@@ -9,6 +9,8 @@ function App() {
   const [logs, setLogs] = useState<string[]>([]); // 计时器日志
   const [isLoop, setIsLoop] = useState(false); // 是否循环
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString('zh-CN'));
+  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('zh-CN'));
 
   // 初始化音频
   useEffect(() => {
@@ -71,9 +73,25 @@ function App() {
     setIsLoop(prev => !prev);
   };
 
+  // 添加新的useEffect来更新日期和时间
+  useEffect(() => {
+    const dateTimer = setInterval(() => {
+      setCurrentDate(new Date().toLocaleDateString('zh-CN'));
+      setCurrentTime(new Date().toLocaleTimeString('zh-CN'));
+    }, 1000); // 每秒更新一次
+
+    return () => clearInterval(dateTimer);
+  }, []);
+
   return (
+    
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-2xl mx-auto">
+        {/* 添加日期和时间显示 */}
+        <div className="text-sm text-gray-500 mb-2 text-right">
+          {currentDate} {currentTime}
+        </div>
+        
         <h1 className="text-3xl font-bold text-gray-800 mb-8">计时器</h1>
         
         {/* 主要功能区 */}
